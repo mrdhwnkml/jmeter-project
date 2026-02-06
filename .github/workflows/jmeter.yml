@@ -6,44 +6,40 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   jmeter-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # 2. Setup Java
       - name: Setup Java 11
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "11"
 
-      # 3. Install JMeter
       - name: Install Apache JMeter
         run: |
           wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz
           tar -xzf apache-jmeter-5.6.3.tgz
           mv apache-jmeter-5.6.3 jmeter
 
-      # 4. Create reports folder
       - name: Create reports folder
         run: mkdir -p reports
 
-      # 5. Run JMeter test
       - name: Run JMeter test
         run: |
           jmeter/bin/jmeter -n -t load-test.jmx -l reports/result.jtl
 
-      # 6. Generate HTML report
       - name: Generate JMeter HTML report
         run: |
           jmeter/bin/jmeter -g reports/result.jtl -o reports/html
 
-      # 7. Deploy HTML to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
