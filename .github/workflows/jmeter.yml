@@ -41,7 +41,7 @@ jobs:
 
       - name: Generate JMeter HTML report
         run: |
-          jmeter/bin/jmeter -g reports/result.jtl -o reports/html
+          jmeter/bin/jmeter -g reports/result.jtl -o reports/html -Juser.timezone=Asia/Jakarta
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
