@@ -25,7 +25,7 @@ jobs:
       # 3. Install JMeter
       - name: Install Apache JMeter
         run: |
-          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz
           tar -xzf apache-jmeter-5.6.3.tgz
           mv apache-jmeter-5.6.3 jmeter
 
@@ -38,21 +38,14 @@ jobs:
         run: |
           jmeter/bin/jmeter -n -t load-test.jmx -l reports/result.jtl
 
-      # 6. Generate HTML report from JTL
-      - name: Generate HTML report
+      # 6. Generate HTML report
+      - name: Generate JMeter HTML report
         run: |
           jmeter/bin/jmeter -g reports/result.jtl -o reports/html
 
-      # 7. Upload JMeter JTL as artifact (opsional)
-      - name: Upload JMeter results
-        uses: actions/upload-artifact@v4
-        with:
-          name: jmeter-results
-          path: reports/
-
-      # 8. Deploy HTML report to GitHub Pages
+      # 7. Deploy HTML to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./reports/html
