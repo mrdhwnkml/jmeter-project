@@ -19,8 +19,8 @@ jobs:
       - name: Setup Java 11
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '11'
+          distribution: "temurin"
+          java-version: "11"
 
       # 3. Install JMeter
       - name: Install Apache JMeter
